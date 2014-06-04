@@ -32,7 +32,7 @@
     </head>
     <body>
         <h3 style="text-align:center;"><a href="/">GroupDocs.Viewer for Java Sample</a></h3>
-        <div class='samplecontent' style="padding:10px;">
+        <div class="samplecontent" style="padding:10px;">
             <span class="description"><i>This sample will show how to integrate GroupDocs.Viewer for Java</i></span>
             <br />
             <check if="{{ @url =='' }}">
@@ -40,16 +40,16 @@
                     <div id="requestForm" style="padding:20px; border:1px solid black;">
                     <p>Enter data for request and press "Integrate" button</p>
                     <form action="view" method = "post" >
-                        <label for='url'>URL of installed GroupDocs.Viewer for Java</label>
+                        <label for="url">URL of installed GroupDocs.Viewer for Java</label>
                         <br />
-                        <input type='text' id="url" name='url' value="{{ @url }}" />
-                        <input type='checkbox' id="header" name='header'  value="true" />Show header
+                        <input type="text" id="url" name="url" value="{{ @url }}" />
+                        <input type="checkbox" id="showHeader" name="showHeader" value="true" checked />Show header
                         <br />
-                        <label for='userName'>Document to view</label>
+                        <label for="userName">Document to view</label>
                         <br />
                         <input type="text" name="documentName" id="documentName" value="" placeholder="{{ @documentName }}" />
                         <br />
-                        <input type='submit' value='Integrate'/>
+                        <input type="submit" value="Integrate"/>
                     </form>
                     </div>
                 </true>
@@ -61,69 +61,75 @@
                     </check>
                     <div id="viewer-widget" class="groupdocs_viewer_wrapper grpdx" style="width: 950px; height: 750px;"></div>
 
-                    <!--TODO: Add filePath request. To use {{ @documentName }} -->
-
                     <script>
                         $(function () {
-                            var localizedStrings = null;
-                            var thumbsImageBase64Encoded = null;
-                            $('#viewer-widget').groupdocsViewer({
-                                filePath: '',
-                                quality: 100,
-                                showThumbnails: true,
-                                openThumbnails: true,
-                                initialZoom: 100,
-                                zoomToFitWidth: true,
-                                zoomToFitHeight: false,
-                                width: 1000,
-                                height: 650,
-                                backgroundColor: '',
-                                showFolderBrowser: true,
-                                showPrint: true,
-                                showDownload: true,
-                                showZoom: true,
-                                showPaging: true,
-                                showViewerStyleControl: true,
-                                showSearch: true,
-                                preloadPagesCount: 0,
-                                viewerStyle: 1,
-                                supportTextSelection: true,
-                                usePdfPrinting: false,
-                                localizedStrings: localizedStrings,
-                                thumbsImageBase64Encoded: thumbsImageBase64Encoded,
-                                toolbarButtonsBoxShadowStyle: '',
-                                toolbarButtonsBoxShadowHoverStyle: '',
-                                thumbnailsContainerBackgroundColor: '',
-                                thumbnailsContainerBorderRightColor: '',
-                                toolbarBorderBottomColor: '',
-                                toolbarInputFieldBorderColor: '',
-                                toolbarButtonBorderColor: '',
-                                toolbarButtonBorderHoverColor: '',
-                                thumbnailsContainerWidth: 0,
-                                jqueryFileDownloadCookieName: 'jqueryFileDownloadJSForGD',
-                                showDownloadErrorsInPopup: false,
-                                showImageWidth: false,
-                                showHeader: {{ @header }},
-                                minimumImageWidth: 0,
-                                enableStandardErrorHandling: true,
-                                useHtmlBasedEngine: false,
-                                useImageBasedPrinting: true,
-                                fileDisplayName: '',
-                                downloadPdfFile: false,
-                                searchForSeparateWords: false,
-                                preventTouchEventsBubbling: false,
-                                useInnerThumbnails: true,
-                                watermarkText: '',
-                                watermarkColor: '',
-                                supportPageReordering: false,
-                                onlyShrinkLargePages: true,
-                                searchHighlightColor: '',
-                                currentSearchHighlightColor: '',
-                                treatPhrasesInDoubleQuotesAsExactPhrases: false,
-                                usePngImagesForHtmlBasedEngine: false,
-                                showOnePageInRow: false,
-                                loadAllPagesOnSearch: false,
-                                useEmScaling: false
+                            $.ajax({
+                                type: "GET",
+                                url: "{{ @ajaxPath }}",
+                                data: "fileName={{ @documentName }}",
+                                success: function (encFilePath) {
+                                    var localizedStrings = null,
+                                        thumbsImageBase64Encoded = null;
+
+                                    $('#viewer-widget').groupdocsViewer({
+                                        filePath: encFilePath,
+                                        quality: 100,
+                                        showThumbnails: true,
+                                        openThumbnails: true,
+                                        initialZoom: 100,
+                                        zoomToFitWidth: true,
+                                        zoomToFitHeight: false,
+                                        width: 1000,
+                                        height: 650,
+                                        backgroundColor: '',
+                                        showFolderBrowser: true,
+                                        showPrint: true,
+                                        showDownload: true,
+                                        showZoom: true,
+                                        showPaging: true,
+                                        showViewerStyleControl: true,
+                                        showSearch: true,
+                                        preloadPagesCount: 0,
+                                        viewerStyle: 1,
+                                        supportTextSelection: true,
+                                        usePdfPrinting: false,
+                                        localizedStrings: localizedStrings,
+                                        thumbsImageBase64Encoded: thumbsImageBase64Encoded,
+                                        toolbarButtonsBoxShadowStyle: '',
+                                        toolbarButtonsBoxShadowHoverStyle: '',
+                                        thumbnailsContainerBackgroundColor: '',
+                                        thumbnailsContainerBorderRightColor: '',
+                                        toolbarBorderBottomColor: '',
+                                        toolbarInputFieldBorderColor: '',
+                                        toolbarButtonBorderColor: '',
+                                        toolbarButtonBorderHoverColor: '',
+                                        thumbnailsContainerWidth: 0,
+                                        jqueryFileDownloadCookieName: 'jqueryFileDownloadJSForGD',
+                                        showDownloadErrorsInPopup: false,
+                                        showImageWidth: false,
+                                        showHeader: {{ @showHeader }},
+                                        minimumImageWidth: 0,
+                                        enableStandardErrorHandling: true,
+                                        useHtmlBasedEngine: false,
+                                        useImageBasedPrinting: true,
+                                        fileDisplayName: '',
+                                        downloadPdfFile: false,
+                                        searchForSeparateWords: false,
+                                        preventTouchEventsBubbling: false,
+                                        useInnerThumbnails: true,
+                                        watermarkText: '',
+                                        watermarkColor: '',
+                                        supportPageReordering: false,
+                                        onlyShrinkLargePages: true,
+                                        searchHighlightColor: '',
+                                        currentSearchHighlightColor: '',
+                                        treatPhrasesInDoubleQuotesAsExactPhrases: false,
+                                        usePngImagesForHtmlBasedEngine: false,
+                                        showOnePageInRow: false,
+                                        loadAllPagesOnSearch: false,
+                                        useEmScaling: false
+                                    });
+                                }
                             });
                         });
                     </script>
